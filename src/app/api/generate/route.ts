@@ -59,14 +59,21 @@ Return ONLY valid JSON with this exact structure (no markdown, no explanation, p
     "total": 81
   },
   "musicStyle": "Specific music style recommendation with 3-4 examples",
-  "cta": "Strong call-to-action text for end of video"
+  "cta": "Strong call-to-action text for end of video",
+  "xhsTitle": "小红书爆款标题 (带emoji, 20字以内, 要有悬念/情绪/数字)",
+  "coverSuggestion": "封面拍摄建议：具体说明拍什么角度、什么光线、加什么文字"
 }
 
 Important rules:
 - Use ${language || "English"} for ALL script, caption, hooks content
 - Apply ${style || "Malaysia Local"} cultural references and slang authentically
-- Make it feel human and natural
-- Hook must grab attention in first 3 seconds
+- Make it feel human and natural, NOT like AI wrote it
+- Hook must create curiosity, shock, or strong emotion in first 3 seconds
+- Caption MUST have lots of emojis 🔥✨💕, line breaks, feel like a real creator wrote it
+- If style is 小红书: use 亲测、绝了、真的被震惊到、姐妹们、宝藏 style language with heavy emoji usage
+- If style is 抖音/TikTok: fast paced, punchy, use trending phrases and relatable scenarios
+- xhsTitle must be click-bait like "被这个震惊了😱" or "测评3款后只选这个💯"
+- coverSuggestion must be very specific and actionable (angle, lighting, text to add)
 - Return ONLY the JSON object, nothing else`;
 
     const completion = await groq.chat.completions.create({
