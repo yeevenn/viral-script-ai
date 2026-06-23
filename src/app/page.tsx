@@ -387,16 +387,24 @@ function PlatformPreview({ output, platform, product }: { output: ScriptOutput; 
 export default function Home() {
   const [form, setForm] = useState({
     product: "",
-    contentType: "",
-    market: "",
-    platform: "",
-    language: "",
-    style: "",
+    contentTypes: [] as string[],
+    markets: [] as string[],
+    platforms: [] as string[],
+    languages: [] as string[],
+    styles: [] as string[],
     extraNotes: "",
   });
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState<ScriptOutput | null>(null);
   const [error, setError] = useState("");
+
+  const toggle = (field: keyof typeof form, value: string) => {
+    const arr = form[field] as string[];
+    setForm({
+      ...form,
+      [field]: arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value],
+    });
+  };
 
   const handleGenerate = async () => {
     if (!form.product.trim()) {
@@ -411,7 +419,15 @@ export default function Home() {
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          product: form.product,
+          contentType: form.contentTypes.join(", "),
+          market: form.markets.join(", "),
+          platform: form.platforms.join(", "),
+          language: form.languages.join(", "),
+          style: form.styles.join(", "),
+          extraNotes: form.extraNotes,
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "生成失败");
@@ -516,12 +532,15 @@ export default function Home() {
 
             {/* Platform */}
             <div className="space-y-2.5">
-              <Label className="text-sm font-bold flex items-center gap-1.5">📱 目标平台</Label>
+              <Label className="text-sm font-bold flex items-center gap-1.5">
+                📱 目标平台
+                <span className="text-xs font-normal text-muted-foreground bg-secondary/60 px-2 py-0.5 rounded-full">可多选</span>
+              </Label>
               <div className="flex flex-wrap gap-2">
                 {PLATFORMS.map((p) => (
                   <Chip key={p.id} emoji={p.emoji} label={p.label}
-                    selected={form.platform === p.id}
-                    onClick={() => setForm({ ...form, platform: form.platform === p.id ? "" : p.id })}
+                    selected={form.platforms.includes(p.id)}
+                    onClick={() => toggle("platforms", p.id)}
                   />
                 ))}
               </div>
@@ -529,12 +548,15 @@ export default function Home() {
 
             {/* Content Type */}
             <div className="space-y-2.5">
-              <Label className="text-sm font-bold flex items-center gap-1.5">🎭 内容类型</Label>
+              <Label className="text-sm font-bold flex items-center gap-1.5">
+                🎭 内容类型
+                <span className="text-xs font-normal text-muted-foreground bg-secondary/60 px-2 py-0.5 rounded-full">可多选</span>
+              </Label>
               <div className="flex flex-wrap gap-2">
                 {CONTENT_TYPES.map((t) => (
                   <Chip key={t.id} emoji={t.emoji} label={t.label}
-                    selected={form.contentType === t.id}
-                    onClick={() => setForm({ ...form, contentType: form.contentType === t.id ? "" : t.id })}
+                    selected={form.contentTypes.includes(t.id)}
+                    onClick={() => toggle("contentTypes", t.id)}
                   />
                 ))}
               </div>
@@ -543,12 +565,15 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Market */}
               <div className="space-y-2.5">
-                <Label className="text-sm font-bold flex items-center gap-1.5">🌍 目标市场</Label>
+                <Label className="text-sm font-bold flex items-center gap-1.5">
+                  🌍 目标市场
+                  <span className="text-xs font-normal text-muted-foreground bg-secondary/60 px-2 py-0.5 rounded-full">可多选</span>
+                </Label>
                 <div className="flex flex-wrap gap-2">
                   {MARKETS.map((m) => (
                     <Chip key={m.id} emoji={m.emoji} label={m.label}
-                      selected={form.market === m.id}
-                      onClick={() => setForm({ ...form, market: form.market === m.id ? "" : m.id })}
+                      selected={form.markets.includes(m.id)}
+                      onClick={() => toggle("markets", m.id)}
                     />
                   ))}
                 </div>
@@ -556,12 +581,15 @@ export default function Home() {
 
               {/* Language */}
               <div className="space-y-2.5">
-                <Label className="text-sm font-bold flex items-center gap-1.5">💬 语言</Label>
+                <Label className="text-sm font-bold flex items-center gap-1.5">
+                  💬 语言
+                  <span className="text-xs font-normal text-muted-foreground bg-secondary/60 px-2 py-0.5 rounded-full">可多选</span>
+                </Label>
                 <div className="flex flex-wrap gap-2">
                   {LANGUAGES.map((l) => (
                     <Chip key={l.id} emoji={l.emoji} label={l.label}
-                      selected={form.language === l.id}
-                      onClick={() => setForm({ ...form, language: form.language === l.id ? "" : l.id })}
+                      selected={form.languages.includes(l.id)}
+                      onClick={() => toggle("languages", l.id)}
                     />
                   ))}
                 </div>
@@ -570,12 +598,15 @@ export default function Home() {
 
             {/* Style */}
             <div className="space-y-2.5">
-              <Label className="text-sm font-bold flex items-center gap-1.5">✨ 内容风格</Label>
+              <Label className="text-sm font-bold flex items-center gap-1.5">
+                ✨ 内容风格
+                <span className="text-xs font-normal text-muted-foreground bg-secondary/60 px-2 py-0.5 rounded-full">可多选</span>
+              </Label>
               <div className="flex flex-wrap gap-2">
                 {STYLES.map((s) => (
                   <Chip key={s.id} emoji={s.emoji} label={s.label}
-                    selected={form.style === s.id}
-                    onClick={() => setForm({ ...form, style: form.style === s.id ? "" : s.id })}
+                    selected={form.styles.includes(s.id)}
+                    onClick={() => toggle("styles", s.id)}
                   />
                 ))}
               </div>
@@ -658,12 +689,12 @@ export default function Home() {
                 <Card className="border-border/30">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-base">
-                      📱 {form.platform || "TikTok"} 发布效果预览
+                      📱 {form.platforms[0] || "TikTok"} 发布效果预览
                     </CardTitle>
                     <p className="text-xs text-muted-foreground">这就是你发布后在平台上看起来的样子 👇</p>
                   </CardHeader>
                   <CardContent>
-                    <PlatformPreview output={output} platform={form.platform || "TikTok"} product={form.product} />
+                    <PlatformPreview output={output} platform={form.platforms[0] || "TikTok"} product={form.product} />
                   </CardContent>
                 </Card>
               </TabsContent>
