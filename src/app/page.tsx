@@ -70,8 +70,9 @@ const LANGUAGES = [
 const STYLES = [
   { id: "小红书爆款风 (干货+颜值+情绪)", emoji: "📕", label: "小红书爆款" },
   { id: "抖音/TikTok 爆款 (快节奏+反转)", emoji: "🎵", label: "抖音爆款" },
-  { id: "Malaysia Local (Lah/Bro/Walai)", emoji: "🇲🇾", label: "Malaysia Local" },
-  { id: "Singapore Singlish (Lah/Lor/Sia)", emoji: "🇸🇬", label: "Singlish" },
+  { id: "Malaysia Chinese Style (大马华语+本地梗：哇靠/酱/对啊/真的假的/你懂我意思吗)", emoji: "🇲🇾🀄", label: "大马华语风" },
+  { id: "Malaysia Local Malay (Lah/Bro/Walai/Weh/Kan)", emoji: "🇲🇾", label: "Malaysia Malay" },
+  { id: "Singapore Singlish (Lah/Lor/Sia/Can or not)", emoji: "🇸🇬", label: "Singlish" },
   { id: "USA Gen Z / TikTok Slang", emoji: "🇺🇸", label: "Gen Z USA" },
   { id: "UK Humour & Sarcasm", emoji: "🇬🇧", label: "UK Humour" },
   { id: "Luxury Brand Aesthetic", emoji: "💎", label: "高端奢华" },

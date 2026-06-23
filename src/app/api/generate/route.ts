@@ -72,6 +72,7 @@ Important rules:
 - Caption MUST have lots of emojis 🔥✨💕, line breaks, feel like a real creator wrote it
 - If style is 小红书: use 亲测、绝了、真的被震惊到、姐妹们、宝藏 style language with heavy emoji usage
 - If style is 抖音/TikTok: fast paced, punchy, use trending phrases and relatable scenarios
+- If style is Malaysia Chinese (大马华语): write in Malaysian Chinese vernacular — mix Mandarin with local Malaysian slang like 哇靠、酱、对啊、真的假的、你懂我意思吗、讲真的、有够、超正、爽、一下子、不然咧、不信你试试、迟些、等下、讲到、搞到、帮衬、巴闭 etc. Feel like a real Malaysian Chinese TikTok creator talking to camera. Natural, casual, funny, relatable to Malaysian Chinese community.
 - xhsTitle must be click-bait like "被这个震惊了😱" or "测评3款后只选这个💯"
 - coverSuggestion must be very specific and actionable (angle, lighting, text to add)
 - Return ONLY the JSON object, nothing else`;
