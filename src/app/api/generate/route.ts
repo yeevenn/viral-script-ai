@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function POST(req: NextRequest) {
   try {
     const { product, contentType, market, platform, language, style, extraNotes } = await req.json();
@@ -14,8 +10,12 @@ export async function POST(req: NextRequest) {
     }
 
     if (!process.env.OPENAI_API_KEY) {
-      return NextResponse.json({ error: "未配置 OpenAI API Key，请联系管理员" }, { status: 500 });
+      return NextResponse.json({ error: "未配置 OpenAI API Key，请在 Vercel 环境变量中添加 OPENAI_API_KEY" }, { status: 500 });
     }
+
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     const systemPrompt = `You are an elite short-form video content director, viral marketing strategist, and professional scriptwriter with 10+ years of experience creating viral content for TikTok, Instagram Reels, YouTube Shorts, and 小红书.
 
